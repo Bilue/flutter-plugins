@@ -160,7 +160,7 @@ class HealthFactory {
     for (var i = 0; i < weights.length; i++) {
       final bmiValue = weights[i].value.toDouble() / (h * h);
       final x = HealthDataPoint(bmiValue, dataType, unit, weights[i].dateFrom,
-          weights[i].dateTo, _platformType, _deviceId!, '', '');
+          weights[i].dateTo, _platformType, _deviceId!, '', '', null, null, null, null, null);
 
       bmiHealthPoints.add(x);
     }
@@ -294,6 +294,12 @@ class HealthFactory {
       final DateTime to = DateTime.fromMillisecondsSinceEpoch(e['date_to']);
       final String sourceId = e["source_id"];
       final String sourceName = e["source_name"];
+      final String? workoutActivityType = e["workout_activity_type"];
+      final num? workoutTotalEnergy = e["total_energy_burned"];
+      final num? workoutTotalDistance = e["total_distance"];
+      final num? workoutTotalFlightsClimbed = e["total_flights_climbed"];
+      final num? workoutTotalSwimmingStrokeCount = e["total_swimming_stroke_count"];
+
       return HealthDataPoint(
         value,
         dataType,
@@ -304,6 +310,11 @@ class HealthFactory {
         device,
         sourceId,
         sourceName,
+        workoutActivityType,
+        workoutTotalDistance,
+        workoutTotalEnergy,
+        workoutTotalFlightsClimbed,
+        workoutTotalSwimmingStrokeCount,
       );
     }).toList();
 

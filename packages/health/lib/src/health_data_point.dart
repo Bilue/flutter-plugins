@@ -12,6 +12,11 @@ class HealthDataPoint {
   String _deviceId;
   String _sourceId;
   String _sourceName;
+  String? _workoutActivityType;
+  num? _workoutTotalEnergy;
+  num? _workoutTotalDistance;
+  num? _workoutTotalFlightsClimbed;
+  num? _workoutTotalSwimmingStrokeCount;
 
   HealthDataPoint(
       this._value,
@@ -22,7 +27,12 @@ class HealthDataPoint {
       this._platform,
       this._deviceId,
       this._sourceId,
-      this._sourceName) {
+      this._sourceName,
+      this._workoutActivityType,
+      this._workoutTotalDistance,
+      this._workoutTotalEnergy,
+      this._workoutTotalFlightsClimbed,
+      this._workoutTotalSwimmingStrokeCount) {
     // set the value to minutes rather than the category
     // returned by the native API
     if (type == HealthDataType.MINDFULNESS ||
@@ -56,7 +66,12 @@ class HealthDataPoint {
           PlatformTypeJsonValue.values.toList().indexOf(json['platform_type'])],
       json['platform_type'],
       json['source_id'],
-      json['source_name']);
+      json['source_name'],
+      json['workout_activity_type'],
+      json['total_energy_burned'],
+      json['total_distance'],
+      json['total_flights_climbed'],
+      json['total_swimming_stroke_count']);
 
   /// Converts the [HealthDataPoint] to a json object
   Map<String, dynamic> toJson() => {
@@ -68,7 +83,12 @@ class HealthDataPoint {
         'platform_type': PlatformTypeJsonValue[platform],
         'device_id': deviceId,
         'source_id': sourceId,
-        'source_name': sourceName
+        'source_name': sourceName,
+        'total_distance' : workoutTotalDistance,
+        'total_energy_burned' : workoutTotalEnergy,
+        'workout_activity_type' : workoutActivityType,
+        'total_flights_climbed' : workoutTotalFlightsClimbed,
+        'total_swimming_stroke_count' : workoutTotalSwimmingStrokeCount,
       };
 
   @override
@@ -80,7 +100,13 @@ class HealthDataPoint {
       'dataType: $type, '
       'platform: $platform, '
       'sourceId: $sourceId, '
-      'sourceName: $sourceName';
+      'sourceName: $sourceName '
+      'total_distance: $workoutTotalDistance '
+      'total_energy_burned: $workoutTotalEnergy '
+      'workout_activity_type: $workoutActivityType '
+      'total_flights_climbed: $workoutTotalFlightsClimbed '
+      'total_swimming_stroke_count: $workoutTotalSwimmingStrokeCount ';
+
 
   /// The quantity value of the data point
   num get value => _value;
@@ -114,6 +140,15 @@ class HealthDataPoint {
 
   /// The name of the source from which the data point was fetched.
   String get sourceName => _sourceName;
+
+
+  String? get workoutActivityType => _workoutActivityType;
+
+
+  num? get workoutTotalEnergy => _workoutTotalEnergy;
+  num? get workoutTotalDistance => _workoutTotalDistance;
+  num? get workoutTotalFlightsClimbed => _workoutTotalFlightsClimbed;
+  num? get workoutTotalSwimmingStrokeCount => _workoutTotalSwimmingStrokeCount;
 
   @override
   bool operator ==(Object o) {

@@ -40,7 +40,16 @@ class _HealthAppState extends State<HealthApp> {
       HealthDataType.STEPS,
       HealthDataType.WEIGHT,
       HealthDataType.HEIGHT,
-      HealthDataType.BLOOD_GLUCOSE,
+      HealthDataType.ACTIVE_ENERGY_BURNED,
+      // HealthDataType.BLOOD_GLUCOSE,
+      // HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
+      // HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
+      //HealthDataType.MOVE_MINUTES, // not available on iOS
+      //HealthDataType.DISTANCE_DELTA, // not available on IOS
+      // HealthDataType.EXERCISE_TIME,
+      // HealthDataType.WORKOUT,
+      // HealthDataType.BASAL_ENERGY_BURNED,
+      // HealthDataType.BODY_FAT_PERCENTAGE,
       // Uncomment this line on iOS - only available on iOS
       // HealthDataType.DISTANCE_WALKING_RUNNING,
     ];
@@ -51,11 +60,21 @@ class _HealthAppState extends State<HealthApp> {
       HealthDataAccess.READ,
       HealthDataAccess.READ,
       HealthDataAccess.READ,
+      // HealthDataAccess.READ,
+      // HealthDataAccess.READ,
+      // HealthDataAccess.READ,
+      // HealthDataAccess.READ,
+      // HealthDataAccess.READ,
+      // HealthDataAccess.READ,
+      // HealthDataAccess.READ,
+      // HealthDataAccess.READ,
+      //HealthDataAccess.READ,
+      //HealthDataAccess.READ,
     ];
 
     // get data within the last 24 hours
     final now = DateTime.now();
-    final yesterday = now.subtract(Duration(days: 1));
+    final yesterday = now.subtract(Duration(days: 30));
 
     // requesting access to the data types before reading them
     // note that strictly speaking, the [permissions] are not
@@ -70,9 +89,10 @@ class _HealthAppState extends State<HealthApp> {
             await health.getHealthDataFromTypes(yesterday, now, types);
 
         // save all the new data points (only the first 100)
-        _healthDataList.addAll((healthData.length < 100)
-            ? healthData
-            : healthData.sublist(0, 100));
+        // _healthDataList.addAll((healthData.length < 100)
+        //     ? healthData
+        //     : healthData.sublist(0, 100));
+        _healthDataList.addAll(healthData);
       } catch (error) {
         print("Exception in getHealthDataFromTypes: $error");
       }
